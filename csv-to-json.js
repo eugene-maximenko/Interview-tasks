@@ -1,6 +1,7 @@
 // Useful link https://heynode.com/blog/2020-02/reading-and-writing-csv-files-nodejs/
 const fs = require('fs')
 const csv = require('csv-parser')
+const users = []
 
 fs.createReadStream('users1.csv')
     .pipe(csv({
@@ -28,8 +29,13 @@ fs.createReadStream('users1.csv')
         const userJSON = JSON.stringify(user);
 
         // Write data into file
-        fs.writeFileSync('users.json', userJSON)
+        fs.appendFile('users.json', userJSON, (err) => {
+            if (err) throw err;
+        });
 
+        fs.appendFile('users.json', ',', (err) => {
+            if (err) throw err;
+        });
     })
 
 function formatDate(date) {
